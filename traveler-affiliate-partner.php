@@ -13,17 +13,18 @@ if (!defined('ABSPATH')) exit;
 define('TAP_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('TAP_PLUGIN_URL', plugin_dir_url(__FILE__));
 
+define('PBP_PLUGIN_URL', TAP_PLUGIN_URL); // <-- ADD THIS LINE
+
 // Only load backend logic!
-// Remove utils.php if not needed or not present
-// require_once TAP_PLUGIN_PATH . 'includes/utils.php';
+// require_once TAP_PLUGIN_PATH . 'includes/utils.php'; // Only if you have this file!
 require_once TAP_PLUGIN_PATH . 'includes/class-commission.php';
-require_once TAP_PLUGIN_PATH . 'includes/commission/tiers.php';
+require_once TAP_PLUGIN_PATH . 'includes/commissions/tiers.php';
 require_once TAP_PLUGIN_PATH . 'includes/admin_pages/partner-edit.php';
 
 // Enqueue the admin select2 JS for the partner edit page
 add_action('admin_enqueue_scripts', function($hook) {
-    // Update this slug to match your actual admin page if needed
-    if ($hook === 'partners_page_tap_affiliate_edit') {
+    // Make sure this matches your actual admin page slug
+    if ($hook === 'partners_page_pbp_affiliate_edit') {
         wp_enqueue_style('select2', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css');
         wp_enqueue_script('select2', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', ['jquery']);
         wp_enqueue_script('tap-admin-select-js', TAP_PLUGIN_URL . 'assets/pp-admin-select.js', ['jquery', 'select2'], '1.0.0', true);
